@@ -1,8 +1,17 @@
 from selenium import webdriver
 import pytest
+from webdriver_manager.chrome import ChromeDriverManager
 
 @pytest.fixture()
 def browser():
-    browser = webdriver.Chrome(r'C:\Users\VnDell6u\Downloads\chromedriver_win32\chromedriver.exe')
-    yield browser
-    browser.close()
+    browser = webdriver.Chrome(ChromeDriverManager().install())
+    browser.implicitly_wait(3)
+    try:
+        yield browser
+    finally:
+        browser.quit()
+
+    return browser
+
+
+
